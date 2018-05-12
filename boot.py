@@ -17,6 +17,8 @@ pyb.LED(3).off()
 if switch_value:
 	pyb.usb_mode('CDC+MSC')
 	blink_led(2)
+	pyb.main('cardreader.py')
 else:
 	pyb.usb_mode('CDC+HID')
 	blink_led(1)
+	pyb.main('datalogger.py')
