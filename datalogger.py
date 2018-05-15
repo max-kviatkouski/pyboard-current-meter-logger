@@ -1,10 +1,13 @@
 import pyb
 from util import *
 
+DELAY_BETWEEN_CYCLES = 5000
 accel = pyb.Accel()
 switch = pyb.Switch()
+rtc = pyb.RTC()
+rtc.wakeup(DELAY_BETWEEN_CYCLES)
 
-DELAY_BETWEEN_CYCLES = 5000
+
 
 def log_series(delay = 20, duration = 5000):
     with open('/sd/log.csv', 'a+') as log:
@@ -24,7 +27,7 @@ log_file_header()
 while True:
     log_series()
     blink_led(red)
-    pyb.delay(DELAY_BETWEEN_CYCLES)
     if switch():
         blink_led(blue)
         break
+    pyb.standby()

@@ -4,7 +4,7 @@ from util import *
 # pyb.usb_mode('CDC+HID')
 
 orange.on()
-pyb.delay(2000)
+pyb.delay(1000)
 switch_value = pyb.Switch()()
 orange.off()
 
