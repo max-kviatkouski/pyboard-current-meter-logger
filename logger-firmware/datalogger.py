@@ -19,9 +19,9 @@ def log_series(delay = 20, duration = 5000):
             x, y, z = accel.filtered_xyz()
             log.write(',{},{},{}\n'.format(x, y, z))
 
-def log_file_header():
-    with open('/sd/log.csv', 'a+') as log:
-        log.write('Time,X,Y,Z\n')
+# def log_file_header():
+#     with open('/sd/log.csv', 'a+') as log:
+#         log.write('Time,X,Y,Z\n')
 
 # log_file_header()
 while True:

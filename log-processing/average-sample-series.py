@@ -2,7 +2,6 @@ import sys
 
 def main():
     c = 0
-    # print(sys.stdin.readline())
     for line in sys.stdin:
         row = line.split(',')
         if (row[0]):
