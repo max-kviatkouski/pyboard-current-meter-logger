@@ -8,15 +8,16 @@ def main():
     pyb = Pyboard('/dev/ttyACM0')
     pyb.enter_raw_repl()
     now = datetime.today()
-    print('Setting time')
+    print('Writing RTC correction checkpoint')
     pyb.exec_raw(
-        "rtc = pyb.RTC()\n"
-        "t = ({0},{1},{2},{3},{4},{5},{6},{7})\n"
-        "rtc.datetime(t)\n"
-        "print('Time now is:')\n"
-        "print(rtc.datetime())\n"
-        "with open('datetime.correction', 'w+') as f:\n"
-        "    f.write('Initialized RTC with: ' + str(t) + '\\n')\n"
+        "print('Test')\n"
+        "rtc_time = pyb.RTC().datetime()\n"
+        "t_real = ({0},{1},{2},{3},{4},{5},{6},{7})\n"
+        "with open('datetime.correction', 'a+') as f:\n"
+        "    f.write('Current RTC is: ' + str(rtc_time) + '\\n')\n"
+        "    print('Current RTC on Pyboard is: ' + str(rtc_time))\n"
+        "    f.write('Real time is: ' + str(t_real) + '\\n')\n"
+        "    print('Real time is ' + str(t_real))\n"
         "    f.flush()\n"
         "    f.close()\n"
         "".format(now.year, now.month, now.day, now.date().weekday() + 1, now.hour, now.minute, now.second + 1, 0),
