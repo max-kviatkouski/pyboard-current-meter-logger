@@ -7,13 +7,13 @@ def write_to_console(data):
 def main():
     pyb = Pyboard('/dev/ttyACM0')
     pyb.enter_raw_repl()
-    now = datetime.today()
-    print('Setting time')
+    now = datetime.utcnow()
+    print('Setting UTC time')
     pyb.exec_raw(
         "rtc = pyb.RTC()\n"
         "t = ({0},{1},{2},{3},{4},{5},{6},{7})\n"
         "rtc.datetime(t)\n"
-        "print('Time now is:')\n"
+        "print('UTC Time now is:')\n"
         "print(rtc.datetime())\n"
         "with open('datetime.correction', 'w+') as f:\n"
         "    f.write('Initialized RTC with: ' + str(t) + '\\n')\n"
