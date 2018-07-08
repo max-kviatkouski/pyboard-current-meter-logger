@@ -10,7 +10,7 @@ def write_line(str):
     angle = axes.get_angle(
         np.array([int(values[0]), int(values[1]), int(values[2])])
     )
-    print(angle, end='\r')
+    print("X: {:<4}, Y: {:<4}, Z: {:<4}, oZ angle: {:<4}".format(values[0], values[1], values[2], angle), end='\r')
 
 class ByteBuffer():
 
