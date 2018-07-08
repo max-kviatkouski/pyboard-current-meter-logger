@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import sys
 from datetime import timezone, datetime, timedelta
 import time

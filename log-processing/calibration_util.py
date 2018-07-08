@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from threading import Thread
 from ampy.pyboard import Pyboard
 import axes_to_angle as axes
