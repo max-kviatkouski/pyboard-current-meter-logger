@@ -14,7 +14,7 @@ def main():
     for line in sys.stdin:
         vals = line.split(',')
         if (vals[0]):
-            vals[0] = str(datetime.fromtimestamp(float(vals[0]) + DELTA, tz))
+            vals[0] = datetime.fromtimestamp(float(vals[0]) + DELTA, tz).strftime('%Y-%m-%d %H:%M:%S')
             print(",".join(vals), end='')
         else:
             print(line, end='')
