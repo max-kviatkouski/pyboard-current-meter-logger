@@ -8,4 +8,4 @@ while True:
     print("{},{},{}".format(x, y, z))
     pyb.delay(20)
     pyb.LED(1).off()
-    pyb.delay(20)
+    pyb.delay(50)
