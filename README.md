@@ -5,7 +5,7 @@ Assembly instructions and DIY project page:
 
 https://hackaday.io/project/158083-cheap-underwater-tilt-current-sensor
 
-#Operational sequence
+# Operational sequence
 This guide assumes that
 * You are running Linux with Python 3 installed
 * When connected PyBoard is available as `/dev/ttyACM0`
