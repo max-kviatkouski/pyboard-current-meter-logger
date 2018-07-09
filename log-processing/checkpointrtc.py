@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from ampy.pyboard import Pyboard
 from datetime import datetime
 
