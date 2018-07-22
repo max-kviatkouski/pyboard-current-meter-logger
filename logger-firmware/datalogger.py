@@ -3,11 +3,11 @@ from util import *
 import utime
 
 #how delay between data captures in milliseconds
-DELAY_BETWEEN_CYCLES = 1000
+DELAY_BETWEEN_CYCLES = 15 * 1000
 #frequency of data capture in a frame in Hz
-FREQ = 25
+FREQ = 31
 #capture frame duration in milliseconds
-DURATION = 900
+DURATION = 2000
 _in_frame_delay = 1000 // FREQ
 _n = DURATION // _in_frame_delay
 accel = pyb.Accel()
@@ -25,7 +25,6 @@ def log_series():
         for i in range(1, _n):
             x, y, z = accel.filtered_xyz()
             log.write(',{},{},{}\n'.format(x, y, z))
-
 while True:
     log_series()
     blink_led(orange, 2, 20)
