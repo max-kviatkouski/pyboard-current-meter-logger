@@ -18,7 +18,7 @@ def main():
         "print('UTC Time now is:')\n"
         "print(rtc.datetime())\n"
         "with open('datetime.correction', 'w+') as f:\n"
-        "    f.write('Initialized UTC RTC with: ' + t + '\\n')\n"
+        "    f.write('Initialized UTC RTC with:' + t + '\\n')\n"
         "    f.flush()\n"
         "    f.close()\n"
         "".format(now.year, now.month, now.day, now.date().weekday() + 1, now.hour, now.minute, now.second + 1, 0),

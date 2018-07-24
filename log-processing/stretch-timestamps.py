@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 def load_corrections(filename):
-    date_fomat = '(%Y, %-m, %-d)'
+    date_fomat = '(%Y, %-m, %-d, %-H, %-M, %-S)'
     with open(filename) as f:
         lines = f.readlines()
         start_ = lines[0]
