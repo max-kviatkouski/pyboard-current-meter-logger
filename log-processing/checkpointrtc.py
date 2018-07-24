@@ -8,17 +8,17 @@ def write_to_console(data):
 def main():
     pyb = Pyboard('/dev/ttyACM0')
     pyb.enter_raw_repl()
-    now = datetime.today()
+    now = datetime.utcnow()
     print('Writing RTC correction checkpoint')
     pyb.exec_raw(
         "print('Test')\n"
         "rtc_time = pyb.RTC().datetime()\n"
         "t_real = ({0},{1},{2},{3},{4},{5},{6},{7})\n"
         "with open('datetime.correction', 'a+') as f:\n"
-        "    f.write('Current RTC is: ' + str(rtc_time) + '\\n')\n"
-        "    print('Current RTC on Pyboard is: ' + str(rtc_time))\n"
-        "    f.write('Real time is: ' + str(t_real) + '\\n')\n"
-        "    print('Real time is ' + str(t_real))\n"
+        "    f.write('Current UTC RTC is: ' + str(rtc_time) + '\\n')\n"
+        "    print('Current UTC RTC on Pyboard is: ' + str(rtc_time))\n"
+        "    f.write('Real UTC time is: ' + str(t_real) + '\\n')\n"
+        "    print('Real UTC time is ' + str(t_real))\n"
         "    f.flush()\n"
         "    f.close()\n"
         "".format(now.year, now.month, now.day, now.date().weekday() + 1, now.hour, now.minute, now.second + 1, 0),
