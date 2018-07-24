@@ -23,17 +23,14 @@ def correct(timestamp, start_, k):
     td = timestamp - start_
     correct_td = timedelta(seconds=round((td.total_seconds() * k)))
     correction = correct_td - td
-    print("correction={}".format(correction))
     return timestamp + correction
 
 def main():
     CSV_DF = '%Y-%m-%d %H:%M:%S'
     start, k = load_corrections(sys.argv[1])
-    print("K = {}".format(k))
-    print("Sync time = {}".format(start))
-    f = open('../../pyboard-current-meter-logger-data/log.2018-07-20.processed.csv', 'r')
-    for line in f.readlines():
-    # for line in sys.stdin:
+    # print("K = {}".format(k))
+    # print("Sync time = {}".format(start))
+    for line in sys.stdin:
         t_ = datetime.strptime(line.split(',')[0], CSV_DF)
         t = correct(t_, start, k)
         vals = line.split(',')
