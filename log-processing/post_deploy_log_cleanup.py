@@ -45,5 +45,7 @@ start = dframe.first_valid_index()
 end = dframe.last_valid_index()
 days_span = (end - start).days
 days = [(start + timedelta(days=delta)).strftime('%Y-%m-%d') for delta in range(0, days_span + 1)]
-daily_logs = {day : dframe[day] for day in days}
-print(len(daily_logs))
+print("Saving into files")
+for day in days:
+    dframe[day].to_csv("{}.csv".format(day))
+# daily_logs = {day : dframe[day] for day in days}
