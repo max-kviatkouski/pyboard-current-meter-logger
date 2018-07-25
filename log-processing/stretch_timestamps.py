@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-import sys
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 import time
 
 def load_corrections(filename):
@@ -25,17 +24,16 @@ def correct(timestamp, start_, k):
     correction = correct_td - td
     return timestamp + correction
 
-def main():
+def stretch_timestamps(data, correction_filename):
     CSV_DF = '%Y-%m-%d %H:%M:%S'
-    start, k = load_corrections(sys.argv[1])
-    # print("K = {}".format(k))
-    # print("Sync time = {}".format(start))
-    for line in sys.stdin:
+    start, k = load_corrections(correction_filename)
+    print("Stretch coefficient K = {}".format(k))
+    print("Sync time t0 = {}".format(start))
+    new_data = list()
+    for line in data:
         t_ = datetime.strptime(line.split(',')[0], CSV_DF)
         t = correct(t_, start, k)
         vals = line.split(',')
         vals[0] = t.strftime(CSV_DF)
-        print(','.join(vals), end='')
-
-if __name__ == "__main__":
-    main()
+        new_data.append(','.join(vals))
+    return new_data

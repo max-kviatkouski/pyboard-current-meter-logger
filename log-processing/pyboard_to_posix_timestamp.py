@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import sys
 from datetime import timezone, datetime, timedelta
 import time
 
@@ -10,14 +9,13 @@ DELTA = (PYBOARD_EPOCH - POSIX_EPOCH).total_seconds()
 offset = time.localtime().tm_gmtoff // 3600
 tz = timezone(timedelta(hours=offset))
 
-def main():
-    for line in sys.stdin:
+def convert_to_posix(data):
+    new_data = list()
+    for line in data:
         vals = line.split(',')
         if (vals[0]):
             vals[0] = datetime.fromtimestamp(float(vals[0]) + DELTA, tz).strftime('%Y-%m-%d %H:%M:%S')
-            print(",".join(vals), end='')
+            new_data.append(",".join(vals))
         else:
-            print(line, end='')
-
-if __name__ == "__main__":
-    main()
+            new_data.appen(line)
+    return new_data
