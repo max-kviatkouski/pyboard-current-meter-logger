@@ -5,6 +5,7 @@
 import sys
 from stretch_timestamps import stretch_timestamps
 from pyboard_to_posix_timestamp import convert_to_posix
+from datetime import timedelta
 import pandas as pd
 from io import StringIO
 
@@ -25,16 +26,24 @@ for filename in csv_filenames:
             data.append(new_line)
 
 #convert PyBoard timestamps to POSIX
+print("Converting PyBoard timestamps to POSIX format")
 local_time_data = convert_to_posix(data)
 
 #stretch time based on correction file. filename of correction data should be the last argument passed
+print("Adjusting log timestamps based on correction file")
 stretched_log = ["Time,Xacc,Yacc,Zacc\n"] #header
 stretched_log.extend(stretch_timestamps(local_time_data, sys.argv[-2]))
 
 #save updated log data into files grouped by day
 #use pandas to manipulate dataset
+print("Splitting log into daily buckets")
 target_folder = sys.argv[-1]
 CSV_DF = '%Y-%m-%d %H:%M:%S'
 str_io = StringIO(''.join(stretched_log)) #lines already have end of new line in the end
 dframe = pd.read_csv(str_io, header=0, index_col=0, parse_dates=True, infer_datetime_format=True)
-print(dframe.size)
+start = dframe.first_valid_index()
+end = dframe.last_valid_index()
+days_span = (end - start).days
+days = [(start + timedelta(days=delta)).strftime('%Y-%m-%d') for delta in range(0, days_span + 1)]
+daily_logs = {day : dframe[day] for day in days}
+print(len(daily_logs))
