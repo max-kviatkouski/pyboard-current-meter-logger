@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import pandas as pd
 import sys
 import matplotlib
@@ -7,13 +8,11 @@ from subprocess import call, Popen
 
 filename = sys.argv[1]
 df = pd.read_csv(filename, header=0, squeeze=True, parse_dates=True, index_col=0)
-# df.resample('5T').mean().plot()
-# pylab.savefig('test.png', dpi = 600)
-# Popen("xdg-open", "test.png", shell=False)
-# plt.show(block = False)
-# plt.pause(0.001)
-# bounds = input('Enter time period when you think there was no current at all in a form of hh:mm - hh:mm\n')
-bounds = "05:00 - 11:00"
+plt.plot(df.resample('5T').mean())
+input("Please take a look at the plot and note time frame where you think buoy was still. Press <Enter> to proceed")
+plt.suptitle("Please remember timeframe when you think buoy \nwas holding still and close this window to proceed", fontsize=24)
+plt.show()
+bounds = input('Please enter timeframe in following format:\nhh:mm - hh:mm\n')
 t1 = bounds.split('-')[0].strip()
 t2 = bounds.split('-')[1].strip()
 df_still = df.between_time(t1, t2)
