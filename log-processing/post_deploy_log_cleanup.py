@@ -8,6 +8,18 @@ from pyboard_to_posix_timestamp import convert_to_posix
 from datetime import timedelta
 import pandas as pd
 from io import StringIO
+import os
+
+if len(sys.argv) < 4:
+    print("""Usage: {} <csv_file_1> [csv_file_2 [csv_file_3 [...]]] <datetime correction file> <output folder>
+    This script does following:
+    - concatenates all <csv_files>
+    - adds missing timestamps
+    - converts PyBoard timestamps to POSIX format
+    - converts timestamps to local timezone
+    - stretches timeline based on <datetime correction file> (to compensate for terribly lagging RTC of PyBoard Lite)
+    - groups logs by day and saves them as csv files (one file per day) in <output folder>""".format(sys.argv[0]))
+    exit(1)
 
 #load files and add timestamps (may need to be removed in the future - I can just add timestamps by logger itself)
 csv_filenames = sys.argv[1:-2]
@@ -47,5 +59,7 @@ days_span = (end - start).days
 days = [(start + timedelta(days=delta)).strftime('%Y-%m-%d') for delta in range(0, days_span + 1)]
 print("Saving into files")
 for day in days:
-    dframe[day].to_csv("{}.csv".format(day))
+    fname = os.path.join(target_folder, "{}.csv".format(day))
+    print("Saving {}".format(fname))
+    dframe[day].to_csv(fname)
 # daily_logs = {day : dframe[day] for day in days}
