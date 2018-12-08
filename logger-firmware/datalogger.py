@@ -3,11 +3,11 @@ from util import *
 import utime
 
 #data frames in ms
-DELAY_BETWEEN_CYCLES = 15 * 1000
+DELAY_BETWEEN_CYCLES = 60 * 1000
 #sampling frequency within frame in Hz
 FREQ = 10
 #frame duration in ms
-DURATION = 3000
+DURATION = 2000
 _in_frame_delay = 1000 // FREQ
 _n = DURATION // _in_frame_delay
 accel = pyb.Accel()
