@@ -31,7 +31,7 @@ with open(zero_filename) as zfile:
     averaged_df = log_df.resample(FREQUENCY).mean()
     angles_df = averaged_df.apply(lambda x: get_angle(row_to_vector(x), ZERO_VECTOR), axis = 1)
     plt.plot(angles_df)
-    plt.ylim(-45, 45)
+    plt.ylim(-180, 180)
     plt.show()
     #convert to DataFrame from Series so we can save with Column names in headers
     angles_df = angles_df.to_frame('Meter Tilt (in degrees)')

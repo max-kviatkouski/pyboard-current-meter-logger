@@ -2,12 +2,12 @@ import pyb
 from util import *
 import utime
 
-#how delay between data captures in milliseconds
-DELAY_BETWEEN_CYCLES = 15 * 1000
-#frequency of data capture in a frame in Hz
+#data frames in ms
+DELAY_BETWEEN_CYCLES = 60 * 1000
+#sampling frequency within frame in Hz
 FREQ = 10
-#capture frame duration in milliseconds
-DURATION = 1000
+#frame duration in ms
+DURATION = 3000
 _in_frame_delay = 1000 // FREQ
 _n = DURATION // _in_frame_delay
 accel = pyb.Accel()
@@ -34,5 +34,5 @@ while True:
     if switch():
         blink_led(blue)
         break
-    pyb.delay(500)
+    pyb.delay(100)
     # pyb.stop()
