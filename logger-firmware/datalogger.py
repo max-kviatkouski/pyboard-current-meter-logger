@@ -3,7 +3,7 @@ from util import *
 import utime
 
 #data frames in ms
-DELAY_BETWEEN_CYCLES = 60 * 1000
+DELAY_BETWEEN_CYCLES = 30 * 1000
 #sampling frequency within frame in Hz
 FREQ = 10
 #frame duration in ms
@@ -14,10 +14,10 @@ accel = pyb.Accel()
 switch = pyb.Switch()
 rtc = pyb.RTC()
 rtc.wakeup(DELAY_BETWEEN_CYCLES)
-datetime = rtc.datetime()
-filename = "/sd/log.{}-{:0>2}-{:0>2}.csv".format(datetime[0], datetime[1], datetime[2])
 
 def log_series():
+    datetime = rtc.datetime()
+    filename = "/sd/log.{}-{:0>2}-{:0>2}.csv".format(datetime[0], datetime[1], datetime[2])
     with open(filename, 'a+') as log:
         for i in range(0, _n):
             t = utime.time()
