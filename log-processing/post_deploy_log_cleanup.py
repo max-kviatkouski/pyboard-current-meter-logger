@@ -18,7 +18,8 @@ if len(sys.argv) < 4:
     - converts PyBoard timestamps to POSIX format
     - converts timestamps to local timezone
     - stretches timeline based on <datetime correction file> (to compensate for terribly lagging RTC of PyBoard Lite)
-    - groups logs by day and saves them as csv files (one file per day) in <output folder>""".format(sys.argv[0]))
+    - groups logs by day and saves them as csv files (one file per day) in <output folder>
+    - specify NONE as datetime correction file name in case data doesn't need correction""".format(sys.argv[0]))
     exit(1)
 
 #load files and add timestamps (may need to be removed in the future - I can just add timestamps by logger itself)
@@ -44,7 +45,11 @@ local_time_data = convert_to_posix(data)
 #stretch time based on correction file. filename of correction data should be the last argument passed
 print("Adjusting log timestamps based on correction file")
 stretched_log = ["Time,Xacc,Yacc,Zacc\n"] #header
-stretched_log.extend(stretch_timestamps(local_time_data, sys.argv[-2]))
+if sys.argv[-2] == 'NONE':
+    filename = None
+else:
+    filename = sys.argv[-2]
+stretched_log.extend(stretch_timestamps(local_time_data, filename))
 
 #save updated log data into files grouped by day
 #use pandas to manipulate dataset

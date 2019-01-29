@@ -25,15 +25,19 @@ def correct(timestamp, start_, k):
     return timestamp + correction
 
 def stretch_timestamps(data, correction_filename):
-    CSV_DF = '%Y-%m-%d %H:%M:%S'
-    start, k = load_corrections(correction_filename)
-    print("Stretch coefficient K = {}".format(k))
-    print("Sync time t0 = {}".format(start))
     new_data = list()
-    for line in data:
-        t_ = datetime.strptime(line.split(',')[0], CSV_DF)
-        t = correct(t_, start, k)
-        vals = line.split(',')
-        vals[0] = t.strftime(CSV_DF)
-        new_data.append(','.join(vals))
+    if not correction_filename:
+        print("Correction file was not specified. Assuming no correction needed.")
+        new_data.extend(data)
+    else:
+        CSV_DF = '%Y-%m-%d %H:%M:%S'
+        start, k = load_corrections(correction_filename)
+        print("Stretch coefficient K = {}".format(k))
+        print("Sync time t0 = {}".format(start))
+        for line in data:
+            t_ = datetime.strptime(line.split(',')[0], CSV_DF)
+            t = correct(t_, start, k)
+            vals = line.split(',')
+            vals[0] = t.strftime(CSV_DF)
+            new_data.append(','.join(vals))
     return new_data

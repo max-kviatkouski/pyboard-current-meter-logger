@@ -21,7 +21,12 @@ zero_filename = "{}.zero".format(csv_filename)
 def get_angle(v1, v2):
     dot_product = np.dot(v1, v2)
     length_product = norm(v1) * norm(v2)
-    return degrees(acos(dot_product / length_product))
+    #not a good way to calculate direction here. needs a proper math
+    #if z vector points 'down' that means z accell value is negative and buoy is
+    #tilting to the ferry - we take it as a positive angle
+    #oil dock - negative angle
+    sign = -np.sign(v1[2] - v2[2])
+    return sign * degrees(acos(dot_product / length_product))
 
 def row_to_vector(pd_row):
     return np.array([pd_row[0], pd_row[1], pd_row[2]])
