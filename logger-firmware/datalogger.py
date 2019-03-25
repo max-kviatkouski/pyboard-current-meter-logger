@@ -3,9 +3,9 @@ from util import *
 import utime
 
 #data frames in ms
-DELAY_BETWEEN_CYCLES = 30 * 1000
+DELAY_BETWEEN_CYCLES = 60 * 1000
 #sampling frequency within frame in Hz
-FREQ = 10
+FREQ = 5
 #frame duration in ms
 DURATION = 2000
 _in_frame_delay = 1000 // FREQ
