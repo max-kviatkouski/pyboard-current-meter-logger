@@ -1,6 +1,6 @@
 from datetime import datetime
 
-day = '2019-01-14'
+day = '2019-06-10'
 #TODO: fix merging code
 current_filename = '/home/max/projects/mukilteo-pnwdiving-org/data/meter/processed/{}.tilt-from-vertical.10T.csv'.format(day)
 predicted_filename = '/home/max/projects/mukilteo-pnwdiving-org/data/imported/{}.tides.csv'.format(day)

@@ -2,10 +2,13 @@
 from datetime import datetime, timedelta
 import time
 
+
 def load_corrections(filename):
     df = '(%Y, %m, %d, %H, %M, %S)'
+
     def get_date_string(line):
         return line.split(':')[-1].strip()
+
     with open(filename) as f:
         lines = f.readlines()
         start_utc = datetime.strptime(get_date_string(lines[0]), df)
@@ -13,10 +16,11 @@ def load_corrections(filename):
         end_expected_utc = datetime.strptime(get_date_string(lines[-1]), df)
         td_actual = end_actual_utc - start_utc
         td_expected = end_expected_utc - start_utc
-        k = td_expected.total_seconds()  / td_actual.total_seconds()
+        k = td_expected.total_seconds() / td_actual.total_seconds()
         offset = time.localtime().tm_gmtoff // 3600
         start_local = start_utc + timedelta(hours=offset)
         return start_local, k
+
 
 def correct(timestamp, start_, k):
     td = timestamp - start_
@@ -24,11 +28,23 @@ def correct(timestamp, start_, k):
     correction = correct_td - td
     return timestamp + correction
 
+def increment(timestamp):
+    correction = datetime(2019, 5, 18, 17, 30, 0, 0) - datetime(2014, 12, 31, 17, 0, 0, 0)
+    return timestamp + correction
+
 def stretch_timestamps(data, correction_filename):
     new_data = list()
     if not correction_filename:
         print("Correction file was not specified. Assuming no correction needed.")
         new_data.extend(data)
+    elif correction_filename == "INC":
+        for line in data:
+            CSV_DF = '%Y-%m-%d %H:%M:%S'
+            t_ = datetime.strptime(line.split(',')[0], CSV_DF)
+            t = increment(t_)
+            vals = line.split(',')
+            vals[0] = t.strftime(CSV_DF)
+            new_data.append(','.join(vals))
     else:
         CSV_DF = '%Y-%m-%d %H:%M:%S'
         start, k = load_corrections(correction_filename)
